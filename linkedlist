@@ -1,0 +1,240 @@
+class Node{
+public:
+int data;
+Node* next;
+};
+class LinkedList{
+private:
+Node* start; // Ponits to starting node of the list.
+public:
+LinkedList();
+~LinkedList();
+void insert();
+// Inserts a node at the endvoid delete();
+int search();
+void display();
+//delete the last node
+// Search for a given element
+// Display the entire list data elements from start node to end.
+// Optional
+void insert(int pos) // [Optional]Insert a node at the position specified by user
+void delete(int pos) // [Optional]delete the node at the position specified by user
+void displayReverse();
+// [Optional] Display the entire list data elements in
+reverse //order from end to start..
+void doReverse(Node*); // [Optional]: Used for reverse order display
+};
+[Optional: Implement 1. Insert at specified position 2. Delete from a specified position 3.
+Display list in reverse order]
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+// Singly Linked List using C++
+class Node{
+public:
+int data; // Stores data
+Node* next;
+};
+class LinkedList{
+Node* start; // Pointer to starting node of Linkedlist
+private:
+void doReverse(Node*);
+public:
+LinkedList();
+void insert();
+void insert(int pos);
+void deleteNode();
+void deleteNode(int pos);
+int search();
+void display();
+void displayReverse();
+~LinkedList();
+};
+LinkedList::LinkedList()
+{
+start = NULL;
+}void LinkedList::insert()
+{
+int data;
+cout<<"Enter data:";
+cin>>data;
+Node *n = new Node;
+n->data = data;
+if(start == NULL)
+{
+start = n;
+start->next = NULL;
+}
+else
+{
+Node *temp = start;
+while(temp->next!= NULL)
+temp = temp->next;
+temp->next = n;
+n->next = NULL;
+}
+}
+void LinkedList::deleteNode(){
+if(start == NULL)
+{
+cout<<"List Empty."<<endl;
+}
+else
+{
+Node *temp = start;
+Node *prev = NULL;
+while(temp->next!= NULL)
+{
+prev = temp;
+temp = temp->next;
+}
+delete temp;
+if(prev)
+prev->next = NULL;
+else
+start =NULL;// List is empty
+}
+}void LinkedList::display()
+{
+Node *temp = start;
+cout<<"List Contents:";
+while(temp!=NULL)
+{
+cout<<temp->data<<" ";
+temp = temp->next;
+}
+cout<<endl;
+}
+int LinkedList::search()
+{
+}
+LinkedList::~LinkedList()
+{
+Node * temp = start;
+while(temp!=NULL)
+{
+Node *cur = temp;
+temp = temp->next;
+delete cur;
+}
+}
+// Function main
+int main(){
+LinkedList list;
+int num,choice,pos = 0;
+do
+{
+//system("cls");
+cout<<"\nEnter choice:\n1.Insert\n2.display\n3.Search\n \
+4. Insert at\n5.Delete\n6.Delete at\n7.Rev. Display\n9:Exit\n:";
+cin>>choice;
+switch(choice)
+{
+case 1:
+list.insert();
+list.display();
+break;
+case 2:
+list.display();
+//getch();
+break;
+case 3:
+list.search();break;
+case 4:
+cout<<"Enter the position:";
+cin>>pos;
+list.insert(pos);
+break;
+case 5:
+list.deleteNode();
+system("cls");
+list.display();
+break;
+case 6:
+cout<<"Enter the position:";
+cin>>pos;
+list.deleteNode(pos);
+system("cls");
+list.display();
+break;
+case 7:
+list.displayReverse();
+break;
+case 9: break;
+default:
+cout<<"Unknown choice.\n";
+}
+}while(choice !=9);
+Return 0;
+} // main ends
+// Optional features
+void LinkedList::insert(int pos){
+int data,i=1;
+cout<<"Enter data:";
+cin>>data;
+Node *n = new Node;
+n->data = data;
+if(start == NULL)
+{
+cout<<"List Empty.Inserting first node of the list\n";
+start = n;
+start->next = NULL;
+}
+else
+{
+Node *temp = start;// To find the position to insert
+while(temp->next!=NULL)
+{
+if(i<pos)
+i++;
+else
+break;
+temp = temp->next;
+}
+if(temp!=NULL)
+{
+n->next = temp->next;
+temp->next = n;
+}
+}
+}
+void LinkedList::deleteNode(int pos){
+int i = 1;
+if(start == NULL)
+{
+cout<<"List Empty."<<endl;
+}
+else
+{
+Node *temp = start;
+Node *prev = start;
+while(temp->next!= NULL)
+{
+if(i<pos)
+i++;
+else
+break;
+prev = temp;
+temp = temp->next;
+}
+if(temp!=NULL)
+{
+if(prev==start)
+start = temp->next ;
+delete temp;
+}
+}
+}void LinkedList::displayReverse()
+{
+doReverse(start);
+}
+void LinkedList::doReverse(Node*temp)
+{
+if(temp)
+{
+doReverse(temp->next);
+cout<<temp->data<<" ";
+}
+else return;
+}

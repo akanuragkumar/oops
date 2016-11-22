@@ -1,52 +1,42 @@
 #include<iostream>
 using namespace std;
-template<class t>
-void quick(t a[],int low,int high)
- {
-   t key;
-   int i,j,flag=1;
-   if(low<high)
-   {
-     key=a[low];
-     i=low+1;
-     j=high;
-     while(flag)
-     {
-       while((a[i]<=key) && (i<j))
-     i++;
-       while(a[j]>key)
-     j--;
-       if(i<j)
-     swap(a,i,j);
-       else
-     flag=0;
-     }
-     swap(a,low,j);
-     quick(a,low,j-1);
-     quick(a,j+1,high);
-   }
- }
+template<class T>
+int part(T *A,int s, int e)
+{
+  int ind=s;
+  T p=A[e];
+  int i; T tmp;
+  for(i=s;i<e;i++)
+    {
+       if(A[i]<=p)
+       {
+          tmp=A[ind];
+          A[ind]=A[i];
+          A[i]=tmp;ind++;
+        }
+    }
+    
+    tmp=A[ind];
+    A[ind]=A[e];
+    A[e]=tmp;
+    
+    return ind;
+}
+template <class T>
+void QS(T *A, int s, int e)
+{  int ind;
+    if(s<e)
+    {
+       ind=part(A,s,e);
+        QS(A,ind+1,e);
+        QS(A,s,ind-1);
+    }
+}
 
-template<class t1>
-void swap(t1 a[],int x,int y)
- {
-   t1 temp;
-   temp=a[x];
-   a[x]=a[y];
-   a[y]=temp;
- }
-main()
- {
-   int i,n,a[20];
-   
-   cout<<"Enter the number of elements to be sort::";
-   cin>>n;
-   cout<<"Enter elements:\n";
-   for(i=0;i<n;i++)
-     cin>>a[i];
-   quick(a,0,n-1);
-   cout<<"The sorted elements are:\n";
-   for(i=0;i<n;i++)
-     cout<< a[i]<<endl;;
-   return 0;
- }
+
+ main()
+  {
+   int A[]={5,4,2,1,3,0,2,-1,6};
+    QS(A,0,8);
+    for(int i=0;i<9;i++)
+     cout<<A[i]<<"\t";}                        
